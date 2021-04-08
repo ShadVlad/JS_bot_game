@@ -1,47 +1,31 @@
 "use strict";
-let isNumber = function (n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
-
-let getHiddenNumber = function () {
-  return parseInt(Math.random() * 100 + 1);
-};
-let getUserNumber = function () {
-  let userAnswer = prompt("Угадай число от 1 до 100");
-  if (userAnswer == null) return userAnswer;
-  if (
-    !isNumber(userAnswer) ||
-    parseFloat(userAnswer) > 100 ||
-    parseFloat(userAnswer) < 1
-  ) {
-    confirm("Введи число от 1 до 100!");
-    getUserNumber();
-  }
-  return userAnswer;
-};
 
 function game() {
-  let hiddenNumber = getHiddenNumber();
-  //console.log("hiddenNumber: ", hiddenNumber);
+  let hiddenNumber = parseInt(Math.random() * 100 + 1);
+  console.log("hiddenNumber: ", hiddenNumber);
+
   let guess = function () {
-    let userNumber = getUserNumber();
-    //console.log("userNumber: ", userNumber);
-    if (userNumber === null) {
+    let userAnswer = prompt("Угадай число от 1 до 100");
+    console.log("userAnswer: ", userAnswer);
+    if (userAnswer == null) {
       alert("Игра окончена");
       return;
     }
 
-    if (userNumber == hiddenNumber) {
-      alert("Поздравляю, Вы угадали!!!");
-      return;
+    if (userAnswer > 100 || userAnswer < 1) {
+      alert("Введи число от 1 до 100!");
+      return guess();
     }
 
-    if (userNumber > hiddenNumber) {
+    if (userAnswer == hiddenNumber) {
+      alert("Поздравляю, Вы угадали!!!");
+      return;
+    } else if (userAnswer > hiddenNumber) {
       alert("Загаданное число меньше. Попробуй еще");
-    } else if (userNumber < hiddenNumber) {
+    } else if (userAnswer < hiddenNumber) {
       alert("Загаданное число больше. Попробуй еще");
     }
-    guess();
+    return guess();
   };
   guess();
 }
